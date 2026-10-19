@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2b1711">
+
+  <title>A Letter from Tirupati to Kodad</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Great+Vibes&display=swap"
+    rel="stylesheet"
+  >
+</head>
+
+<body>
+  <main id="app">
+
+    <!-- Opening journey -->
+    <section id="journey" class="screen journey-screen">
+      <div class="grain"></div>
+
+      <div id="travelLetter" class="travel-letter">✉</div>
+
+      <div id="travelPostbox" class="travel-postbox">
+        <span>✉</span>
+      </div>
+
+      <div id="cityScene" class="city-scene">
+        <div class="scene-caption">
+          <span id="sceneCaption"></span>
+        </div>
+      </div>
+
+      <button id="skipButton" class="skip-button" type="button">
+        Skip Animation ↗
+      </button>
+    </section>
+
+    <!-- Welcome -->
+    <section id="welcome" class="screen welcome-screen hidden">
+      <div class="grain"></div>
+
+      <button id="postboxButton" class="postbox-button" type="button">
+        <span class="postbox-icon">📮</span>
+        <span class="postbox-label">Click Here to Open Your Letter ✉</span>
+      </button>
+    </section>
+
+    <!-- Envelope -->
+    <section id="envelopeScreen" class="screen envelope-screen hidden">
+      <div class="grain"></div>
+
+      <button id="envelopeButton" class="envelope-button" type="button">
+        <div class="envelope">
+          <div class="envelope-paper">For Hima</div>
+          <div class="envelope-flap"></div>
+          <div class="envelope-front"></div>
+          <div class="wax-seal">H</div>
+        </div>
+
+        <span class="envelope-label">Click to Open</span>
+      </button>
+    </section>
+
+    <!-- Letter pages -->
+    <section id="letterScreen" class="screen reading-screen hidden">
+      <article class="paper letter-paper">
+
+        <div
+          id="letterPages"
+          class="letter-pages"
+          aria-live="polite"
+        ></div>
+
+        <div class="letter-navigation">
+          <button
+            id="previousPageButton"
+            class="primary-button page-navigation-button"
+            type="button"
+            hidden
+          >
+            ← Previous Page
+          </button>
+
+          <span
+            id="pageIndicator"
+            class="page-indicator"
+            aria-live="polite"
+          ></span>
+
+          <button
+            id="nextPageButton"
+            class="primary-button page-navigation-button"
+            type="button"
+          >
+            Turn Page →
+          </button>
+
+          <button
+            id="replyButton"
+            class="primary-button reply-button"
+            type="button"
+            hidden
+          >
+            Write a Reply ✉
+          </button>
+        </div>
+
+      </article>
+    </section>
+
+    <!-- Reply form -->
+    <section id="replyScreen" class="screen reading-screen hidden">
+      <article class="paper reply-paper">
+
+        <h1>Write Your Reply</h1>
+
+        <p class="reply-intro"></p>
+
+        <form id="replyForm">
+          <textarea
+            id="replyText"
+            placeholder="Write your letter here..."
+            aria-label="Your letter"
+            required
+            maxlength="10000"
+            rows="10"
+          ></textarea>
+
+          <button
+            id="postButton"
+            class="primary-button"
+            type="submit"
+          >
+            Post My Letter ✉
+          </button>
+
+          <p
+            id="errorMessage"
+            class="error-message"
+            role="alert"
+          ></p>
+        </form>
+
+      </article>
+    </section>
+
+    <!-- Confirmation -->
+    <section id="confirmation" class="screen confirmation-screen hidden">
+      <div class="grain"></div>
+
+      <div class="confirmation-card">
+        <p class="eyebrow">Message delivered</p>
+        <h1>Your letter has been posted!</h1>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+  <!-- Your JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
