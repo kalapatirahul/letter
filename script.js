@@ -38,7 +38,7 @@ Hima Krishna Priya
 Kodad
 Telengana
 
-Subject: Your wish fill anything
+Subject: Enjoy your holidays and Take care
 
 Respected Hima,
 
