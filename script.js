@@ -1,3 +1,4 @@
+
 /* =========================================
    1. FIREBASE CONFIGURATION
 ========================================= */
@@ -19,7 +20,9 @@ try {
     firebaseConfig.apiKey !== "YOUR_API_KEY" &&
     firebaseConfig.projectId !== "YOUR_PROJECT_ID"
   ) {
-    firebase.initializeApp(firebaseConfig);
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
     db = firebase.firestore();
   }
 } catch (error) {
@@ -27,27 +30,25 @@ try {
 }
 
 /* =========================================
-   2. COMPLETE LETTER
+   2. COMPLETE LETTER — UPDATED
 ========================================= */
 
 const originalLetter = `To
 Hima Krishna Priya
 Kodad
-Telangana
+Telengana
 
-Subject : My busy dayyyyyy
+Subject: Your wish fill anything
 
 Respected Hima,
 
-Hai, ela unnaru. Ninna night miru class ki vastharu anukunna, miru reply evale ga inka miru raru emo ani, tarvatha nidrapoya. Morning lechaka mee message chusanu. Hope you are enjoying your holidays at home. Morning miru message chesina time lo temple ki velthunna so taravatha reply evaledhu, intiki vachaka message chesa, but intlo oka work chepparu
+Miru rasina reply chadhiva, miru ignore chesthunnaru ala em feel avakandi, actually daily miku messages chestha ga, so na day ela undhi ani miku chepdham ani letters rasa, miru reply evakapoyina parledhu, but ala em anukokandi miru. Eroju letter em rayakudadhu anukunna, but miru ala em feel avakandi ani chepatam kosam letter rasthunna.
 
-First, eroju Monday ani Kapiltheertham temple ki vella. Tarvatha daddy oka work chepparu court, bank, hospital ala tiruguthune unna. Intiki vachaka breakfast thindham anukunna, but time chusaka direct lunch thinna
+Miku okati cheppana, nina night nen message chesa ga miku appudu miru reply echaru, normal ga message chestha ga alane message chesa miku and miru last varaku reply echaru, morning lechaka chusthe chat em ledhu, just "Hai" message okati undhi, miku telsu ga nadhi kodi brain ani, taravatha chala time alochinchaka ardham ayindhi, miru message cheyaledhu, adhi dream ani.
 
-Lunch tarvatha class ki vacha. Miru vastharu anukunna. Two days nunchi IoT chaduvuthunna, so eroju coding chedham ani CDCT classwork open chesa, chusthe index page thappa inkem rayaledhu. So online lo Linked List basics chesa, 2 hours ade chesthu unna. Tarvatha one hour web development chesa. Taravatha chala chadivesa ani, nidrapoya
+Miru eve em alochinchakandi, inti dagara miku em anna works unte chuskondi, intlo valatho time spend cheyandi and miru nanu ignore chesthunnaru ala em anukokandi, miru message cheyali ante message cheyandi, miru letters rayamante rastha lekapothe ledhu.
 
-Ninna Bathukamma festival last day anukunta ga, ela celebrate chesukunnaru miru, miru share chesina photo chusanu, chaala baagundhi
-
-Nina evening Swapped movie chusa, aa movie enni times chusina, 1st time chusina feel vasthundhi, it became one of my favorite movie, eroju "Manam" movie chudham anukuntunna. Eroju miru free ga unte night class ki vachaka message chesthara
+Actually letter morning send chedham anukunna, but send chedhama odha ani alochisthu, ippudu send chesthunna, sorry if I disturbed you, actually nen chepdham anukunindhi miku ardham ayindha ledha ani ardham kavatam ledhu, hope you understood, em ledhu just one thing "Miru holidays happy ga enjoy cheyandi", take care.
 
 Thanking you
 
@@ -109,17 +110,18 @@ function paginateLetter() {
   }
 
   const previousIndex = currentLetterPage;
-
   const measurer = document.createElement("div");
 
   measurer.className =
     "handwritten-letter letter-page-content letter-measurer";
 
-  measurer.style.width = `${pageWidth}px`;
-  measurer.style.height = "auto";
-  measurer.style.minHeight = "0";
-  measurer.style.maxHeight = "none";
-  measurer.style.overflow = "visible";
+  Object.assign(measurer.style, {
+    width: `${pageWidth}px`,
+    height: "auto",
+    minHeight: "0",
+    maxHeight: "none",
+    overflow: "visible"
+  });
 
   document.body.appendChild(measurer);
 
@@ -132,7 +134,6 @@ function paginateLetter() {
 
   for (const token of tokens) {
     const candidate = current + token;
-
     measurer.textContent = candidate;
 
     if (
@@ -201,12 +202,10 @@ function createLetterPage(content) {
   page.className = "letter-page";
 
   const text = document.createElement("div");
-
   text.className =
     "handwritten-letter letter-page-content";
 
   text.textContent = content;
-
   page.appendChild(text);
 
   return page;
@@ -221,7 +220,6 @@ function renderLetterPages() {
   letterPagesElement.appendChild(createLetterPage(content));
 
   const isFirstPage = currentLetterPage === 0;
-
   const isLastPage =
     currentLetterPage === letterPageChunks.length - 1;
 
@@ -390,7 +388,6 @@ async function typeWriter(text, element, token) {
     }
 
     element.textContent += text[i];
-
     await wait(180);
   }
 }
@@ -403,7 +400,6 @@ async function showCityScene(scene, token) {
   cityScene.classList.remove("show", "jerk");
   sceneCaption.textContent = "";
 
-  // Preload and validate the image before displaying it.
   const imageUrl = new URL(scene.image, document.baseURI).href;
 
   cityScene.style.backgroundImage =
@@ -574,18 +570,20 @@ envelopeButton.addEventListener("click", async () => {
   envelopeButton.disabled = true;
   envelopeButton.classList.add("opening");
 
-  await wait(800);
+  try {
+    await wait(800);
 
-  showScreen(letterScreen);
+    showScreen(letterScreen);
 
-  requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      paginateLetter();
+      requestAnimationFrame(() => {
+        paginateLetter();
+      });
     });
-  });
-
-  envelopeButton.classList.remove("opening");
-  envelopeButton.disabled = false;
+  } finally {
+    envelopeButton.classList.remove("opening");
+    envelopeButton.disabled = false;
+  }
 });
 
 /* =========================================
@@ -641,7 +639,6 @@ replyForm.addEventListener("submit", async (event) => {
     });
 
     replyText.value = "";
-
     showScreen(confirmation);
   } catch (error) {
     console.error("Could not save the reply:", error);
