@@ -30,7 +30,7 @@ try {
 }
 
 /* =========================================
-   2. COMPLETE LETTER — UPDATED
+   2. COMPLETE LETTER
 ========================================= */
 
 const originalLetter = `To
@@ -38,7 +38,7 @@ Hima Krishna Priya
 Kodad
 Telengana
 
-Subject: Enjoy your holidays and Take care
+Subject: Enjoy Holidays and Take Care
 
 Respected Hima,
 
